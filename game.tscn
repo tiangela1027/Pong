@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://game.gd" type="Script" id=1]
 [ext_resource path="res://DeliusUnicase-Regular.ttf" type="DynamicFontData" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://enemy.gd" type="Script" id=4]
 [ext_resource path="res://ball.gd" type="Script" id=5]
 [ext_resource path="res://sprite.gd" type="Script" id=6]
+[ext_resource path="res://paddle_hit.wav" type="AudioStream" id=7]
 
 [sub_resource type="DynamicFont" id=4]
 
@@ -38,7 +39,7 @@ radius = 24.341
 custom_solver_bias = 0.0
 extents = Vector2( 1.94727, 261.543 )
 
-[node name="main" type="Node2D" index="0"]
+[node name="game" type="Node2D"]
 
 script = ExtResource( 1 )
 
@@ -84,16 +85,18 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
+_sections_unfolded = [ "custom_colors", "custom_fonts" ]
 
 [node name="top" type="StaticBody2D" parent="." index="1" groups=[
 "wall",
 ]]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 2
@@ -106,7 +109,7 @@ _sections_unfolded = [ "Collision" ]
 [node name="Polygon2D" type="Polygon2D" parent="top" index="0"]
 
 rotation = -3.14159
-polygon = PoolVector2Array( 0.417858, 0.867428, 0.466502, -236.7, -34.9032, -236.7, -35.246, -37.246, -989.595, -34.5456, -990.57, -236.443, -1024.22, -236.931, -1021.29, -0.408308 )
+polygon = PoolVector2Array( 0.417858, 0.867428, 0.466502, -236.7, -35.1485, -237.129, -35.246, -37.246, -990, -36.9998, -989.71, -237.414, -1024.65, -237.414, -1025.14, 1.30635 )
 uv = PoolVector2Array(  )
 color = Color( 0, 0, 0, 1 )
 vertex_colors = PoolColorArray(  )
@@ -142,7 +145,7 @@ _sections_unfolded = [ "Collision", "Transform" ]
 
 position = Vector2( -1023.46, -603.818 )
 rotation = -3.14159
-polygon = PoolVector2Array( 0.417858, 0.867428, 0.466502, -236.7, -34.9032, -236.7, -35.246, -37.246, -989.595, -34.5456, -990.57, -236.443, -1024.22, -236.931, -1021.29, -0.408308 )
+polygon = PoolVector2Array( 0.417858, 0.867428, 0.466502, -236.7, -34.9032, -236.7, -35.246, -37.246, -989.951, -37.1683, -989.627, -236.453, -1023.52, -236.893, -1023.08, 0.335449 )
 uv = PoolVector2Array(  )
 color = Color( 0, 0, 0, 1 )
 vertex_colors = PoolColorArray(  )
@@ -181,6 +184,7 @@ color = Color( 0, 0, 0, 1 )
 
 [node name="goal" type="Area2D" parent="." index="5"]
 
+editor/display_folded = true
 position = Vector2( -2.15094, 0.35849 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -198,27 +202,12 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="goal" index="0"]
 
-position = Vector2( 1009.66, 301.834 )
+position = Vector2( 1027.62, 301.834 )
 shape = SubResource( 3 )
-
-[node name="hit" type="Polygon2D" parent="goal" index="1"]
-
-visible = false
-polygon = PoolVector2Array( 988.641, 240.207, 1026.36, 240.207, 1026.36, 363.547, 988.735, 363.51 )
-uv = PoolVector2Array(  )
-color = Color( 1, 0, 0, 1 )
-vertex_colors = PoolColorArray(  )
-offset = Vector2( 0, 0 )
-antialiased = false
-texture = null
-texture_offset = Vector2( 0, 0 )
-texture_scale = Vector2( 1, 1 )
-texture_rotation_degrees = 0.0
-invert_enable = false
-invert_border = 100.0
 
 [node name="goal_enemy" type="Area2D" parent="." index="6"]
 
+editor/display_folded = true
 position = Vector2( -2.95029, -0.356964 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -236,30 +225,14 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="goal_enemy" index="0"]
 
-position = Vector2( 17.8319, 298.279 )
+position = Vector2( 4.56793, 298.637 )
 shape = SubResource( 3 )
-
-[node name="hit" type="Polygon2D" parent="goal_enemy" index="1"]
-
-visible = false
-position = Vector2( -988.23, -1.85062 )
-polygon = PoolVector2Array( 988.641, 240.207, 1026.36, 240.207, 1026.36, 363.547, 988.735, 363.51 )
-uv = PoolVector2Array(  )
-color = Color( 1, 0, 0, 1 )
-vertex_colors = PoolColorArray(  )
-offset = Vector2( 0, 0 )
-antialiased = false
-texture = null
-texture_offset = Vector2( 0, 0 )
-texture_scale = Vector2( 1, 1 )
-texture_rotation_degrees = 0.0
-invert_enable = false
-invert_border = 100.0
 
 [node name="ball" type="KinematicBody2D" parent="." index="7" groups=[
 "ball",
 ]]
 
+editor/display_folded = true
 position = Vector2( 512, 300 )
 input_pickable = false
 collision_layer = 4
@@ -279,7 +252,9 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="sprite" type="Node2D" parent="ball" index="1"]
 
+editor/display_folded = true
 script = ExtResource( 6 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="center" type="Position2D" parent="ball/sprite" index="0"]
 
@@ -287,6 +262,7 @@ _sections_unfolded = [ "Transform", "Z Index" ]
 
 [node name="center_line" type="StaticBody2D" parent="." index="8"]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 8
 collision_mask = 2
@@ -307,6 +283,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="goal_line" type="StaticBody2D" parent="." index="9"]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 8
 collision_mask = 2
@@ -324,6 +301,7 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="goal_line2" type="StaticBody2D" parent="." index="10"]
 
+editor/display_folded = true
 position = Vector2( 943.653, -3.34039 )
 input_pickable = false
 collision_layer = 8
@@ -340,6 +318,19 @@ position = Vector2( 39.5782, 298.86 )
 shape = SubResource( 2 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="hit" type="AudioStreamPlayer2D" parent="." index="11"]
+
+stream = ExtResource( 7 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[connection signal="player_goal" from="." to="." method="_on_game_player_goal"]
+
 [connection signal="paddle_hit" from="paddle" to="." method="_on_paddle_paddle_hit"]
 
 [connection signal="enemy_hit" from="enemy" to="." method="_on_enemy_enemy_hit"]
@@ -347,6 +338,8 @@ _sections_unfolded = [ "Transform" ]
 [connection signal="body_entered" from="goal" to="." method="_on_goal_body_entered"]
 
 [connection signal="body_entered" from="goal_enemy" to="." method="_on_goal_enemy_body_entered"]
+
+[connection signal="finished" from="hit" to="." method="_on_hit_finished"]
 
 
 [editable path="enemy"]
