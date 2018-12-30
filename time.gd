@@ -30,6 +30,3 @@ func _on_countdown_timeout():
 	count_down = false
 	emit_signal("unpause")
 
-
-func _on_main_done():
-	queue_free()

@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 12.8571, 58.717 )
 
-[node name="paddle" type="KinematicBody2D" index="0"]
+[node name="paddle" type="KinematicBody2D"]
 
 pause_mode = 2
 input_pickable = false

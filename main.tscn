@@ -21,7 +21,7 @@ use_filter = false
 font_data = ExtResource( 2 )
 _sections_unfolded = [ "Font", "Settings" ]
 
-[node name="main" type="Node"]
+[node name="main" type="Node" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause" ]
@@ -42,6 +42,8 @@ invert_enable = false
 invert_border = 100.0
 
 [node name="win" type="Node" parent="." index="1"]
+
+editor/display_folded = true
 
 [node name="player" type="Label" parent="win" index="0"]
 
@@ -142,9 +144,9 @@ _sections_unfolded = [ "Pause" ]
 
 [connection signal="enemy_goal" from="game" to="." method="_on_game_enemy_goal"]
 
-[connection signal="paused" from="game" to="." method="_on_game_paused"]
-
 [connection signal="paused" from="game" to="time" method="_on_game_paused"]
+
+[connection signal="paused" from="game" to="." method="_on_game_paused"]
 
 [connection signal="player_goal" from="game" to="." method="_on_game_player_goal"]
 

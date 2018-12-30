@@ -6,6 +6,7 @@ extends Node
 var player_counter
 var enemy_counter
 var win
+var done
 
 signal done
 
@@ -16,6 +17,7 @@ func _ready():
 	player_counter = 0
 	enemy_counter = 0
 	win = 10
+	done = false
 
 
 func _on_time_unpause():
@@ -26,15 +28,19 @@ func _on_time_unpause():
 func _on_game_player_goal():
 	player_counter = player_counter + 1
 	if player_counter == win:
+		$time.queue_free()
 		$win/enemy.show()
-		_on_game_won()
+		$game/hit.play()
+		done = true
 
 
 func _on_game_enemy_goal():
 	enemy_counter = enemy_counter + 1
 	if enemy_counter == win:
+		$time.queue_free()
 		$win/player.show()
-		_on_game_won()
+		$game/hit.play()
+		done = true
 
 
 func _on_game_paused():
@@ -42,5 +48,8 @@ func _on_game_paused():
 	
 	
 func _on_game_won():
-	emit_signal("done")
 	get_tree().paused = true
+	
+func _on_hit_finished():
+	if done:
+		_on_game_won()
