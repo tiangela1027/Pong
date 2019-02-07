@@ -29,6 +29,9 @@ func _ready():
 	
 func start():
 	which_side()
+	
+func _on_game_player_goal():
+	pass
 
 
 func _on_goal_body_entered(body):

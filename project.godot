@@ -12,13 +12,17 @@ config_version=3
 
 config/name="Pong"
 run/main_scene="res://main.tscn"
-config/icon="res://icon.png"
+config/icon="res://pong.png"
 
 [display]
 
 window/size/test_width=512
 window/size/test_height=300
 window/stretch/mode="viewport"
+
+[editor]
+
+active=false
 
 [input]
 

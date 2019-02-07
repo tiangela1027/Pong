@@ -1,0 +1,4 @@
+A two-player pong game.
+
+Control the white paddle with WASD or the black paddle with the arrow keys. 
+The first to score ten goals wins.
